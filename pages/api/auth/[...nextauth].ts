@@ -13,12 +13,9 @@ const options = {
     jwt: true,
   },
   callbacks: {
-    async jwt(account, token) {
-      console.log("callback", JSON.stringify(account, null, 2))
-      console.log("callback2", JSON.stringify(token, null, 2))
-
+    async jwt(token, _, account) {
       if (account) {
-        token.accessToken = account.access_token;
+        token.accessToken = account?.accessToken;
       }
       return token;
     },
