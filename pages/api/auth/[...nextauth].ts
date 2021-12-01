@@ -1,11 +1,18 @@
 import NextAuth from "next-auth"
 import Providers from "next-auth/providers"
 
+const scopes = [
+  'https://www.googleapis.com/auth/userinfo.email',
+  'https://www.googleapis.com/auth/userinfo.profile',
+  'https://www.googleapis.com/auth/contacts.readonly'
+];
+
 const options = {
   providers: [
     Providers.Google({
       clientId: process.env.GOOGLE_ID,
       clientSecret: process.env.GOOGLE_SECRET,
+      scope: scopes.join(" "),
     }),
   ],
   secret: process.env.SECRET,
@@ -22,7 +29,5 @@ const options = {
   },
 }
 
-export default (req, res) => {
-  console.log("sup")
-  return NextAuth(req, res, options)
-}
+export default (req, res) => NextAuth(req, res, options)
+
