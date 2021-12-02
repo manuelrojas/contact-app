@@ -1,5 +1,6 @@
 import NextAuth from "next-auth"
 import Providers from "next-auth/providers"
+import { NextApiRequest, NextApiResponse } from "next";
 
 const scopes = [
   'https://www.googleapis.com/auth/userinfo.email',
@@ -29,5 +30,5 @@ const options = {
   },
 }
 
-export default (req, res) => NextAuth(req, res, options)
+export default (req: NextApiRequest, res: NextApiResponse) => NextAuth(req, res, options)
 

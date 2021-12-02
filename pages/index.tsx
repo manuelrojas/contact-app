@@ -1,28 +1,40 @@
-import React from "react"
-import { GetStaticProps } from "next"
-import Layout from "../components/Layout"
-import Post, { PostProps } from "../components/Post"
-import prisma from '../lib/prisma'
+import React from "react";
+import Layout from "../components/Layout";
+import Form from "../components/Form"
+import ListComment from "../components/ListComment"
+import axios from 'axios';
+import useSWR from 'swr';
 
-export const getStaticProps: GetStaticProps = async () => {
-  const comments = await prisma.comment.findMany();
-  return { props: { comments } };
-}
 
-type Props = {
-  comments: PostProps[]
-}
+const fetcher = async (url: string) => { 
+  const rest = await axios.get(url); 
+  return rest.data; 
+};
 
-const Blog: React.FC<Props> = (props) => {
+export type Contact = {
+  id: string;
+  name: string;
+  photo: string;
+  email: string;
+};
+
+const Blog: React.FC = () => {
+  const { data, error } = useSWR('/api/people/getContact', fetcher);
+
   return (
     <Layout>
       <div className="page">
         <h1>Public Feed</h1>
         <main>
-          {props.comments.map((comment) => (
-            <div key={comment.id} className="post">
-              <Post post={comment} />
-            </div>
+        {data && data.map((contact: Contact) => (
+              <div key={contact.id}  className="post">
+                <p>{contact.name}</p>
+                <p>{contact.email}</p>
+                <p>{contact.photo}</p>
+                <ListComment contactId={contact.id} />
+                <Form contactId={contact.id} /> 
+                
+              </div>
           ))}
         </main>
       </div>

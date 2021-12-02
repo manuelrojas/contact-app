@@ -1,3 +1,9 @@
-# Fullstack Authentication with Next.js and NextAuth.js
+# Contact APP with Next.js, NextAuth.js, Google People API
 
-This is the starter project for the fullstack tutorial with Next.js and Prisma. You can find the final version of this project in the [`final`](https://github.com/prisma/blogr-nextjs-prisma/tree/final) branch of this repo.
+
+
+You can adjust your database schema by creating the actual tables in the database. Run the following command:
+
+npx prisma db push
+
+npx prisma studio

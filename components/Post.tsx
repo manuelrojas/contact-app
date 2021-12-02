@@ -5,16 +5,13 @@ import ReactMarkdown from "react-markdown";
 export type PostProps = {
   id: number;
   title: string;
-  author: {
-    name: string;
-    email: string;
-  } | null;
+  contactId: string;
   content: string;
-  published: boolean;
+
 };
 
 const Post: React.FC<{ post: PostProps }> = ({ post }) => {
-  const authorName = post.author ? post.author.name : "Unknown author";
+  const authorName = "Unknown author";
 
   return (
     <div onClick={() => Router.push("/p/[id]", `/p/${post.id}`)}>

@@ -11,8 +11,9 @@ datasource db {
 }
 
 model Comment {
-  id      Int    @id @default(autoincrement())
-  title   String
-  content String
-  createdAt String
+  id        Int     @id @default(autoincrement())
+  contactId String  
+  title     String
+  content   String
+  createdAt DateTime  @default(now())
 } 

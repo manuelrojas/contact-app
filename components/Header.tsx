@@ -7,7 +7,7 @@ import Image from 'next/image';
 
 const Header: React.FC = () => {
   const router = useRouter();
-  const [session, loading] = useSession();
+  const [session] = useSession();
 
   let button;
 
