@@ -13,7 +13,8 @@ const Form: React.FC<Props> = (props) => {
     setContent('');
     setTitle('');
   }
-    return (
+  
+  return (
       <div className="flex  items-center justify-center shadow-lg mt-10 mx-8 mb-4 max-w-lg">
         <form className="w-full max-w-xl bg-white rounded-lg px-4 pt-2" onSubmit={(e) => props.createComment(e, props.contactId, reset)}>
             <div className="flex flex-wrap -mx-3 ">

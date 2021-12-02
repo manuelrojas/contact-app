@@ -1,12 +1,18 @@
 import jwt from 'next-auth/jwt';
 import {google} from 'googleapis'
 import { NextApiRequest, NextApiResponse } from "next";
-
+import { getSession } from 'next-auth/client';
 const secret = process.env.SECRET;
 const clientId = process.env.GOOGLE_CLIENT_ID;
 const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
 
 export default async (req: NextApiRequest, _res: NextApiResponse) => {
+  const session = await getSession({ req });
+  
+  if(!session) {
+    _res.status(403).end('Unauthorized route');
+  }
+  
   const token = await jwt.getToken({ req, secret });
   
   const auth = new google.auth.OAuth2({
@@ -25,15 +31,16 @@ export default async (req: NextApiRequest, _res: NextApiResponse) => {
     personFields: 'names,emailAddresses,photos,metadata',
   };
 
-let peopleApiResolve, peopleApiReject;
+  let peopleApiResolve, peopleApiReject;
 
-var getData = new Promise(function(resolve, reject){
-  peopleApiResolve = resolve;
-  peopleApiReject = reject;
-});
+  var getData = new Promise(function(resolve, reject){
+    peopleApiResolve = resolve;
+    peopleApiReject = reject;
+  });
  
+
   const getPeople = (err, res) => {
-    if(err) peopleApiReject(err);
+    if(err) return peopleApiReject(err);
 
     const { connections } = res?.data;
       if (connections) {
@@ -52,9 +59,14 @@ var getData = new Promise(function(resolve, reject){
     return res;
   } 
 
+  try {
+    service.people.connections.list(options, getPeople);
+    const data = await getData.then(data => data);
+  
+    _res.send(JSON.stringify(data, null, 2));
+  } catch (error) {
+    _res.status(500).send({ error: 'API failed' })
+  }  
 
-  service.people.connections.list(options, getPeople);
-  const data = await getData.then(data => data);
 
-  _res.send(JSON.stringify(data, null, 2));
 };
