@@ -1,13 +1,16 @@
-# Contact APP with Next.js, NextAuth.js, Google People API
+# Contact APP with Next.js
 
 
 Technology Stack:
 
 - React
 - Typescript 
-- Next.js Serverless
+- Next.js
+- NextAuth.js
 - PostgreSQL 
 - Heroku
+- Google People API
+
 
 
 
