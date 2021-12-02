@@ -22,10 +22,10 @@ const ListComment: React.FC<Props> = (props) => {
     
     return (
       <div>
-        {!comments.length && <div>loading...</div>}
+        {!comments.length && <div className="m5">loading...</div>}
         {comments.map((comment: CommentProps) => (
-            <div key={comment.id} className="post">
-              <Comment post={comment} />
+            <div key={comment.id}>
+              <Comment comment={comment} />
             </div>
           ))}
       </div>

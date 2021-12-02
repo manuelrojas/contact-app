@@ -9,13 +9,21 @@ export type CommentProps = {
 
 };
 
-const Comment: React.FC<{ post: CommentProps }> = ({ post }) => {
+const Comment: React.FC<{ comment: CommentProps }> = ({ comment }) => {
 
   return (
-    <div>
-      <h2>{post.title}</h2> 
-      <ReactMarkdown source={post.content} />
-    </div>
+		<div className="flex flex-col p-8 m-10 bg-gray-100 hover:shodow-lg rounded-2xl">
+			<div className="flex items-center justify-between">
+				<div className="flex items-center">
+					<div className="flex flex-col ml-3">
+						<div className="font-medium leading-none">{comment?.title}</div>
+						<p className="text-sm text-gray-600 leading-none mt-1">
+							{comment?.content}
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
   );
 };
 

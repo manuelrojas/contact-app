@@ -11,8 +11,15 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
    // console.log(global.prisma);
     const data = await prisma.comment.findMany({
       where: {
-        contactId: contactId as string,
-    }}); 
+          contactId: contactId as string,
+      },
+      orderBy: [
+        {
+          createdAt: 'desc',
+        },
+      ],
+      take: 3
+  }); 
    // const data = await prisma.comment.findMany(); 
 
     res.send(JSON.stringify(data, null, 2));

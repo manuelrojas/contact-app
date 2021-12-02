@@ -35,7 +35,7 @@ var getData = new Promise(function(resolve, reject){
   const getPeople = (err, res) => {
     if(err) peopleApiReject(err);
 
-    const { connections } = res.data;
+    const { connections } = res?.data;
       if (connections) {
         let newData = [];
         newData = connections.map(person => {
