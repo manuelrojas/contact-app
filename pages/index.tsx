@@ -12,7 +12,7 @@ export type Contact = {
   email: string;
 };
 
-const Blog: React.FC = () => {
+const Main: React.FC = () => {
   const { isLoading, data = [] } = useFetch('/api/people/getContact');
   const [refresh, setRefresh] = useState(false);
 
@@ -32,17 +32,22 @@ const Blog: React.FC = () => {
   return (
     <Layout>
       <div className="page">
-        <h1>Public Feed</h1>
+        <h1>Your contacts</h1>
         <main>
         {data && data.map((contact: Contact) => (
-              <div key={contact.id}  className="post">
-                <p>{contact.name}</p>
-                <p>{contact.email}</p>
-                <p>{contact.photo}</p>
+            <div>
+              <div key={contact.id}  className="w-full bg-white rounded-lg p-12 flex flex-col justify-center items-center">
+                <img 
+                  className="object-center object-cover rounded-full h-36 w-36" 
+                  src={contact.photo} alt="photo" />
+                <p className="text-xl text-gray-700 font-bold mb-2">{contact.name}</p>
+                <p className="text-base text-gray-400 font-normal">{contact.email}</p>
+              </div>
                 <ListComment contactId={contact.id} refresh={refresh} />
                 <Form contactId={contact.id} createComment={createComment} /> 
+            </div>   
                 
-              </div>
+             
           ))}
         </main>
       </div>
@@ -64,4 +69,4 @@ const Blog: React.FC = () => {
   )
 }
 
-export default Blog
+export default Main

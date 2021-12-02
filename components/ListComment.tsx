@@ -1,4 +1,4 @@
-import Post, { PostProps } from "./Post";
+import Comment, { CommentProps } from "./Comment";
 
 import { useEffect, useState } from "react";
 import axios from 'axios';
@@ -22,9 +22,10 @@ const ListComment: React.FC<Props> = (props) => {
     
     return (
       <div>
-        {comments.map((comment: PostProps) => (
+        {!comments.length && <div>loading...</div>}
+        {comments.map((comment: CommentProps) => (
             <div key={comment.id} className="post">
-              <Post post={comment} />
+              <Comment post={comment} />
             </div>
           ))}
       </div>
