@@ -1,22 +1,12 @@
-import axios from 'axios';
-
 type Props = {
     contactId: string;
+    createComment: Function;
   };
 
 const Form: React.FC<Props> = (props) => {
-    const createComment = async event => {
-      event.preventDefault();
-
-    await axios.post('/api/comment/create', {
-        contactId: props.contactId,
-        title: event.target.title.value,
-        content: event.target.content.value,
-      });
-    }
   
     return (
-      <form onSubmit={createComment}>
+      <form onSubmit={(e) => props.createComment(e, props.contactId)}>
         <label htmlFor="title">title</label>
         <input id="title" name="title" type="text" autoComplete="title" required />
         <label htmlFor="content">content</label>

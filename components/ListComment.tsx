@@ -1,21 +1,28 @@
 import Post, { PostProps } from "./Post";
-import axios from 'axios';
-import useSWR from 'swr';
 
-const fetcher = async (url: string, id: string) => { 
-  const rest = await axios.get(`${url}?contactId=${id}`); 
-  return rest.data; 
-};
+import { useEffect, useState } from "react";
+import axios from 'axios';
 
 type Props = {
-  contactId: string
+  contactId: string,
+  refresh: boolean,
 }
 
 const ListComment: React.FC<Props> = (props) => {
-  const { data, error } = useSWR(['/api/comment/get', props.contactId], fetcher);
+  const [comments, setComments] = useState([]);
+    useEffect(() => {
+      async function getComments() {
+        let url = `/api/comment/get?contactId=${props.contactId}`;
+        const res = await axios.get(url);
+        setComments(res.data);
+      }  
+      getComments();
+  
+    }, [props.refresh]) 
+    
     return (
       <div>
-        {data?.map((comment: PostProps) => (
+        {comments.map((comment: PostProps) => (
             <div key={comment.id} className="post">
               <Post post={comment} />
             </div>

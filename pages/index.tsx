@@ -1,15 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "../components/Layout";
 import Form from "../components/Form"
 import ListComment from "../components/ListComment"
+import useFetch from "react-fetch-hook";
 import axios from 'axios';
-import useSWR from 'swr';
-
-
-const fetcher = async (url: string) => { 
-  const rest = await axios.get(url); 
-  return rest.data; 
-};
 
 export type Contact = {
   id: string;
@@ -19,7 +13,21 @@ export type Contact = {
 };
 
 const Blog: React.FC = () => {
-  const { data, error } = useSWR('/api/people/getContact', fetcher);
+  const { isLoading, data = [] } = useFetch('/api/people/getContact');
+  const [refresh, setRefresh] = useState(false);
+
+
+  const createComment = async (event, contactId) => {
+    event.preventDefault();
+
+    await axios.post('/api/comment/create', {
+        contactId: contactId,
+        title: event.target.title.value,
+        content: event.target.content.value,
+    });
+
+    setRefresh(!refresh);
+  }
 
   return (
     <Layout>
@@ -31,8 +39,8 @@ const Blog: React.FC = () => {
                 <p>{contact.name}</p>
                 <p>{contact.email}</p>
                 <p>{contact.photo}</p>
-                <ListComment contactId={contact.id} />
-                <Form contactId={contact.id} /> 
+                <ListComment contactId={contact.id} refresh={refresh} />
+                <Form contactId={contact.id} createComment={createComment} /> 
                 
               </div>
           ))}
