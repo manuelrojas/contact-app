@@ -12,6 +12,7 @@ Technology Stack:
 - Heroku
 - Google People API
 - Tailwind CSS
+- Errors handling using React ErrorBoundary
 
 UI/UX:
 
