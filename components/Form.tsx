@@ -3,7 +3,7 @@ import React, { useState } from "react";
 type Props = {
     contactId: string;
     createComment: Function;
-  };
+};
 
 const Form: React.FC<Props> = (props) => {
   const [title, setTitle] = useState('');
