@@ -13,6 +13,7 @@ Technology Stack:
 - Google People API
 - Tailwind CSS
 - Errors handling using React ErrorBoundary
+- Jest and React Testing Library
 
 UI/UX:
 
